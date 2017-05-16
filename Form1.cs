@@ -193,7 +193,7 @@ namespace Tietojenilmoitusohjelma
             System.IO.StreamWriter fileW = new System.IO.StreamWriter("c:\\work\\settings.txt");
             fileW.WriteLine("hddStart");
             fileW.Close();
-            label2.Text = "Nykyinen: " + startThread; //nykyinen tekstin asetus
+            label2.Text = "Nykyinen: prosessorin ilmoitus"; // nykyinen tekstin asetus
             MessageBox.Show("HDD:n ilmoittaminen asetettu oletukseksi! (tiedosto sijainnissta: " + polku + ")");
         }
         //prosessori oletus
@@ -202,7 +202,7 @@ namespace Tietojenilmoitusohjelma
             System.IO.StreamWriter fileW = new System.IO.StreamWriter("c:\\work\\settings.txt");
             fileW.WriteLine("cpuStart");
             fileW.Close();
-            label2.Text = "Nykyinen: " + startThread; // nykyinen tekstin asetus
+            label2.Text = "Nykyinen: prosessorin ilmoitus"; //nykyinen tekstin asetus
             MessageBox.Show("CPU:n ilmoittaminen asetettu oletukseksi! (tiedosto sijainnissta: " + polku + ")");
         }
         /// <summary>
