@@ -1,0 +1,36 @@
+Tietojenilmoitusohjelman (info-ilmoitin v0.1) käyttö- ja kehitysopas
+Ilari Malinen
+
+Ohjelma on tiedonilmoitus ohjelma joka toimii työkalupalkissa. Se ilmoittaa käyttäjän valinnan perusteella, joko kovalevyjen tai vaihtoehtoisesti prosessorin käyttöä.
+Ilmoitus tapahtuu työkalupalkki ikonilla. Kovalevytilassa ikoni muuttuu punaiseksi aina, jos tietoa virtaa kovalevyissä. Muuten se on musta. Prosessoritilassa ikoni muuttuu
+punaiseksi prosessorin käytön ylittäessä 80%. Vaihtaminen toimii oikeaklikkaamalla ikonia ja valitsemalla haluamansa toiminto. Samasta paikasta löytyy myös asetukset, jossa
+voi valita oletus ilmoitettava. Tähän tarvitaan c:/work kansio toiminnon toimintaan. Älä sammuta settings ikkunaa rastista jos et halua koko ohjelman sammuvan. Käytä 'close'
+nappulaa. Nämä infot löytyvät about nappulasta.
+
+Jatkokehitykseen on lopputtomat mahdollisuudet. Lisää mahdollisia ilmoitusaiheita, kuten network liikenteen ilmoitus on tulossa. Settings ikkunan ulkonäön ja toimintaa voi
+parantaa huomattavasti. Asetuseten toiminta ja tallentaminen omaan kansioon, missä ohjelmakin sijaitsee. Tällä hetkellä toimiva work kansioon tallentuva tekstitiedosto on
+melko epävakaa ratkaisu ja on vain toiminnon demoamista. Ikonien lisäys joka eri toiminnolle on tärkeä lisäys. Tällä hetkellä kaikilla on kovalevyn kuvake ikonina.
+Tarkemmat asetukset olisi myös mukava tehdä, kuten että käyttäjä voisi säätää tresholdeja milloin välkkyy. Uuden välivärin tuominen esimerkiksi oranssi. Uudet säikeet
+pitää muistaa aina lisätä threads -listaan, jotta staattiset funktiot toimivat niiden kanssa.
+
+Ohjelmakoodi (löytyy alkuperäisen kansion tiedostoista, tärkein osa form1.cs!) koostuu Form1.cs, Form1.designer.cs ja Program.cs tiedostoista. Viimeisimmät ovat suurimalta osin
+visual studion generoimaa koodia, muutamalla omalla rivillä. Form1.cs sisältää ohjelman toiminnan. Se koostuu 5 regionsita: Global variables eli globaalit muuttujat joita käytetään
+ohjelmassa, Forms eli ikkuna toiminnot ja sen piilottaminen sekä setup, EventHandlers (Ikoni menu napit) eli toiminnot menun valikko näppäimille, threads eli säikeet (täältä löytyy
+ohjelman toimintaan tärkein osuus) ja static functions mistä löytyvät muutamat staattiset funktiot joita ohjelmassa tarvitaan. Ohjelma vaihtelee valinnan mukaan mitä säiettä se
+pyörittää (cpu/hdd) ja vaihdettaessa sammuttaa kaikki luonnollisesti ja aloittaa halutun alusta. Näin ei tule ongelmia joita tulisi jos niitä tauottaa tai sammuttaa niiden valmeilla
+funktiollla. Toisaalta ohjelmassa on funktio tauttomaan niitä, mutta tässä versiossa se ei ole käytössä (täysin jatkon kannalta). Hdd info saadaan käymällä läpi managementclassin
+perfdata_PhysicalDisk drivedata instanssit ja etsimällä vertailulla "_Total" joka ilmoittaa kaikkien fyysisten levyjen toiminnan. Sitten katsotaan onko sen arvo DiskBytesPersec
+yli 0. Cpu katsotaan helpommin PerformanceCounterilla, joka ottaa "Processor Information", "% Processor Time", "_Total" tiedot jolloin saadan prosessorin käytön prosentti.
+Sitten vain verrataan sitä tresholdiin(80). Näitä tutkittavia löytyy Windows Management Instrumententation (wbemtest) ohjelmasta joka löytyy joka windowsista. Sieltä vain etsitään
+haluttu tutkittava ja otetaan siitä polku merkkijonoina ManagementClassiin. Sieltä löytyy vaikka mitä, tässä ohjelmassa on käytetty vain muutamaa tutkittavaa arvoa.
+
+OHJELMAN AJAMINEN: Ohjelma löytyy kansiosta Tietojenilmoitusohjelma/bin/debug ja sieltä Tietojenilmoitusohjelma applikaatio. Ennen ajamista varmista, että C levyltä löytyy work
+kansio ja se ei ole kielletty. Aja ohjelma ja huomaat tumman ikonin ilmestyvän työkalupalkkiin. Jos et tarkista että onko ikoni mennyt windowsin nuolipalkkiin, josta sen
+voi raahamalla siirtää näkyville. Klikkaa ikonia oikella hiirennäppäimellä ja valitse haluamasi ilmoitettava. Asetukset saat esille 'settings' valinnasta. Ohjelma on tarkoitettu
+annettavan juosta taustalla samalla kuin teet muuta hommaa tietokoneella. Windowsin asetuksista ohjelman saa aukeamaan automaattisesti käynnistäessä tietokoneen.
+Quit nappula sammuttaa ohjlman. Jos avaat asetukset sammuta se close nappulasta ÄLÄ YLHÄÄLLÄ OLEVASTA RASTISTA SE SAMMUTTAA KOKO OHJELMAN. Tämä toiminto korjataan jatkokehityksessä, 
+mutta nyt ohjelma keskittyy ennemmän perustoimintoihin ja koko settings ikkuna on hieman vaiheessa.
+
+Lopullisen version voi ladata viimeistään kesän lopusssa osoitteesta https://github.com/IlaMal
+
+ps. En osannut tehdä visual studiolla ns. Javadoc tiedostoa, mutta ohjelmaan on kommentoitu javadoc tyylillä.
